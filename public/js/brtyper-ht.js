@@ -53,29 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Char: ${char}, KeyCombination: ${data.keyCombination}, Dots: ${data.dots}`);
 
         const row = document.createElement('tr');
+        const letterCell = document.createElement('td');
         const charCell = document.createElement('td');
         const keysCell = document.createElement('td');
         const dotsCell = document.createElement('td');
 
+        // Harf hücresini doldur
+        letterCell.textContent = char;
+        letterCell.className = 'font-weight-bold';
+
         // Karakter hücresini doldur
-        charCell.textContent = char;
+        charCell.innerHTML = `<span aria-label="${char}"></span><span aria-hidden="true">${data.character}</span>`;
         charCell.className = 'braille-text';
-        charCell.setAttribute('aria-label', `Braille karakteri: ${char}`);
-
-        // Tuş kombinasyonları hücresini doldur
-        keysCell.textContent = data.keyCombination || 'N/A';
-        keysCell.className = 'font-weight-bold';
-        keysCell.setAttribute('aria-label', `Tuş kombinasyonu: ${data.keyCombination}`);
-
+        
         // Noktalar hücresini doldur
         dotsCell.textContent = data.dots || 'N/A';
         dotsCell.className = 'braille-dots';
         dotsCell.setAttribute('aria-label', `Braille noktaları: ${data.dots}`);
 
+        // Tuş kombinasyonları hücresini doldur
+        keysCell.textContent = data.keyCombination || 'N/A';
+        keysCell.className = '';
+        keysCell.setAttribute('aria-label', `Tuş kombinasyonu: ${data.keyCombination}`);
+
         // Satırı tabloya ekle
+        row.appendChild(letterCell);
         row.appendChild(charCell);
-        row.appendChild(keysCell);
         row.appendChild(dotsCell);
+        row.appendChild(keysCell);
         tableBody.appendChild(row);
     }
 
