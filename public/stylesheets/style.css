@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'SimBraille';
+  src: url('/fonts/SIMBRL.TTF') format('truetype');
+}
+.braille-text {
+  font-family: 'SimBraille', sans-serif;
+  font-size: 20px;
+}
+
+/* Navbar */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0; /* Adjust to align the menu properly */
+}

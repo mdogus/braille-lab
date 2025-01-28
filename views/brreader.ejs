@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<body class="container mt-5">
+    <%- include('partials/header') %>
+    <h1 class="mb-4"><%= title %></h1>
+
+    <!-- Bootstrap Tabs -->
+    <ul class="nav nav-tabs" id="readingPracticeTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="practice1-tab" data-toggle="tab" href="#practice1" role="tab" aria-controls="practice1" aria-selected="true">Okuma Yap</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="practice2-tab" data-toggle="tab" href="#practice2" role="tab" aria-controls="practice2" aria-selected="false">Oku-Yaz</a>
+        </li>
+    </ul>
+    <div>
+        <h2>Bir Harfli Kısaltmalar</h2>
+        <p>Aşağıda Bir Harfli Kısaltmalar ve örnek cümleler yer almaktadır.</p>
+        <table rol="table" id="brailleCharTable" class="table table-striped mt-3" aria-labelledby="brailleCharTableCaption">
+            <caption id="brailleCharTableCaption">Tablo: Bir Harfli Braille Kısaltmaları</caption>
+            <thead>
+                <tr>
+                    <th scope="col" aria-label="Karakter">Karakter</th>
+                    <th scope="col" aria-label="Tuş Kombinasyonu">Yazı Karşılığı</th>
+                    <th scope="col" aria-label="Noktalar">Noktalar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript tarafından doldurulacak -->
+                <tr>
+                    <td class="braille-text">a</td>
+                    <td>aynı</td>
+                    <td>[1]</td>
+                </tr>
+                <tr>
+                    <td class="braille-text">b</td>
+                    <td>büyük</td>
+                    <td>[1-2]</td>
+                </tr>
+                <tr>
+                    <td class="braille-text">c</td>
+                    <td>can</td>
+                    <td>[1-4]</td>
+                </tr>
+            </tb
+            </tb
+            </tbody>
+        </table>
+        <ul>
+            <li><strong>"a" <span class="braille-text">a</span> harfi:</strong>
+                <br><span class="braille-text">a anda konusmaya basladilar.</span>
+                <br>Aynı anda konuşmaya başladılar.</li>
+        </ul>
+    </div>
+    <div>
+        <h2>İki Harfli Kısaltmalar</h2>
+        <p>Aşağıda İki Harfli Kısaltmalar ve örnek cümleler yer almaktadır.</p>
+        <ul>
+            <li><strong>"bt" <span class="braille-text">bt</span> harfleri:</strong>
+                <br><span class="braille-text">ruzgardan bt kapilar carpiyordu.</span>
+                <br>Aynı anda konuşmaya başladılar.</li>
+        </ul>
+    </div>
+    <div>
+        <h2>Kelime Kökü Kısaltmaları</h2>
+        <p>Aşağıda Kelime Kökü Kısaltmaları ve örnek cümleler yer almaktadır.</p>
+    </div>
+    <div>
+        <h2>Kelime Parçası Kısaltmaları</h2>
+        <p>Aşağıda Kelime Parçası Kısaltmaları ve örnek cümleler yer almaktadır.</p>
+    </div>
+    <div class="tab-content" id="readingPracticeTabContent">
+        <div class="tab-pane fade show active" id="practice1" role="tabpanel" aria-labelledby="practice1-tab">
+            <!-- Okuma Yap Alıştırması İçeriği -->
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1>Üretilen Türkçe Cümle</h1>
+                        <p id="sentenceDisplay" class="braille-text mt-4"></p>
+                        <button id="generateButton" class="btn btn-primary mt-3">Yenile</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="tab-pane fade" id="howitworks" role="tabpanel" aria-labelledby="howitworks-tab">
+            <!-- Oku-Yaz Alıştırması İçeriği -->
+        </div>
+    </div>
+    
+    <script type="module" src="/js/brreader.js"></script> 
+    <%- include('partials/footer') %>
+</body>
+</html>
