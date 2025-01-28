@@ -6,7 +6,6 @@ const router = express.Router();
 const API_URL = 'https://api-inference.huggingface.co/models/dbmdz/bert-base-turkish-cased';
 const API_KEY = process.env.HF_TOKEN;
 
-
 router.get('/generate', async (req, res) => {
     try {
         console.log('Hugging Face API çağrısı başlatılıyor...'); // Hata ayıklama için

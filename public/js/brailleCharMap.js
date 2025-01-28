@@ -19,40 +19,40 @@ const brailleCharMap = {
 
 const brailleCharMapForHowTo = {
     'd': { 
-        keyCombination: 'f,j,k', 
-        dots: '[1-4-5]' 
+        keyCombination: 'f,j,k',
+        dots: '1-4-5'
     },
     'e': { 
         keyCombination: 'f,k', 
-        dots: '[1-5]' 
+        dots: '1-5'
     },
     'f': { 
         keyCombination: 'f,d,j', 
-        dots: '[1-2-4]' 
+        dots: '1-2-4'
     },
     'g': { 
         keyCombination: 'f,d,j,k', 
-        dots: '[1-2-4-5]' 
+        dots: '1-2-4-5'
     },
     'h': { 
         keyCombination: 'f,d,k', 
-        dots: '[1-2-5]' 
+        dots: '1-2-5' 
     },
     'i': { 
         keyCombination: 'd,j', 
-        dots: '[2-4]' 
+        dots: '2-4' 
     },
     'j': { 
         keyCombination: 'd,j,k', 
-        dots: '[2-4-5]' 
+        dots: '2-4-5'
     },
     'w': { 
         keyCombination: 'd,j,k,l', 
-        dots: '[2-4-5-6]' 
+        dots: '2-4-5-6'
     },
     'x': { 
         keyCombination: 'f,s,j,l', 
-        dots: '[1-3-4-6]' 
+        dots: '1-3-4-6'
     },
     ' ': { 
         keyCombination: 'boşluk', 

@@ -1,0 +1,106 @@
+{
+    "a": {
+        "dots": "1",
+        "keyCombination": "f"
+    },
+    "b": {
+        "dots": "1_2",
+        "keyCombination": "f_d"
+    },
+    "c": {
+        "dots": "1_4",
+        "keyCombination": "f_j"
+    },
+    "d": {
+        "dots": "1_4_5",
+        "keyCombination": "f_j_k"
+    },
+    "e": {
+        "dots": "1_5",
+        "keyCombination": "f_k"
+    },
+    "f": {
+        "dots": "1_2_4",
+        "keyCombination": "f_d_j"
+    },
+    "g": {
+        "dots": "1_2_4_5",
+        "keyCombination": "f_d_j_k"
+    },
+    "h": {
+        "dots": "1_2_5",
+        "keyCombination": "f_d_k"
+    },
+    "i": {
+        "dots": "2_4",
+        "keyCombination": "d_j"
+    },
+    "j": {
+        "dots": "_ 2_4_5",
+        "keyCombination": "j_k"
+    },
+    "k": {
+        "dots": "1_3",
+        "keyCombination": "f_s"
+    },
+    "l": {
+        "dots": "1_2_3",
+        "keyCombination": "f_d_s"
+    },
+    "m": {
+        "dots": "1_3_4",
+        "keyCombination": "f_s_j"
+    },
+    "n": {
+        "dots": "1_3_4_5",
+        "keyCombination": "f_s_j_k"
+    },
+    "o": {
+        "dots": "1_3_5",
+        "keyCombination": "f_s_k"
+    },
+    "p": {
+        "dots": "1_2_3_4",
+        "keyCombination": "f_d_s_j"
+    },
+    "q": {
+        "dots": "1_2_3_4_5",
+        "keyCombination": "f_d_s_j_k"
+    },
+    "r": {
+        "dots": "1_2_3_5",
+        "keyCombination": "f_d_s_k"
+    },
+    "s": {
+        "dots": "2_3_4",
+        "keyCombination": "d_s_j"
+    },
+    "t": {
+        "dots": "2_3_4_5",
+        "keyCombination": "d_s_j_k"
+    },
+    "u": {
+        "dots": "1_3_6",
+        "keyCombination": "f_s_l"
+    },
+    "v": {
+        "dots": "1_2_3_6",
+        "keyCombination": "f_d_s_l"
+    },
+    "w": {
+        "dots": "2_4_5_6",
+        "keyCombination": "d_j_k_l"
+    },
+    "x": {
+        "dots": "1_3_4_6",
+        "keyCombination": "f_s_j_l"
+    },
+    "y": {
+        "dots": "1_3_4_5-_6",
+        "keyCombination": "f_s_j_l"
+    },
+    "z": {
+        "dots": "1_3_5_6",
+        "keyCombination": "f_s_k_l"
+    }
+}
