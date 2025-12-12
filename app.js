@@ -1,61 +1,53 @@
-// test/app.test.js
-console.log('⟵ app.test.js yüklendi');  // BU satırı ekleyin
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-test('dummy test', () => {
-  expect(true).toBe(true);
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const brtyperRouter = require('./routes/brtyper');
+const brreaderRouter = require('./routes/brreader');
+const aboutRouter = require('./routes/about');
+const lettersRouter = require('./routes/letters');
+const contractionsWithSingleLetterRouter = require('./routes/contractionsWithSingleLetter');
+const contactRouter = require('./routes/contact');
+
+const app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/brtyper', brtyperRouter);
+app.use('/brreader', brreaderRouter);
+app.use('/letters', lettersRouter);
+app.use('/contractions-single', contractionsWithSingleLetterRouter);
+app.use('/about', aboutRouter);
+app.use('/contact', contactRouter);
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404));
 });
 
-// sizin describe(...) bloğunuz burada
-describe('Express Uygulaması Ana Testleri', () => {
-  it('GET / → 200 ve HTML içermeli', async () => {
-    /* ... */
-  });
-  // diğer it() blokları...
+// error handler
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
-// test/app.test.js
-/*
-const request = require('supertest');
-const app = require('../app');
-
-describe('Express Uygulaması Ana Testleri', () => {
-
-  it('GET / → 200 ve HTML içermeli', async () => {
-    const res = await request(app).get('/');
-    expect(res.statusCode).toBe(200);
-    expect(res.headers['content-type']).toMatch(/html/);
-  });
-
-  it('GET /users → 200 ve HTML içermeli', async () => {
-    const res = await request(app).get('/users');
-    expect(res.statusCode).toBe(200);
-    expect(res.headers['content-type']).toMatch(/html/);
-  });
-
-  it('GET /brtyper → 200 dönmeli', async () => {
-    const res = await request(app).get('/brtyper');
-    expect(res.statusCode).toBe(200);
-  });
-
-  it('GET /brreader → 200 dönmeli', async () => {
-    const res = await request(app).get('/brreader');
-    expect(res.statusCode).toBe(200);
-  });
-
-  it('GET /about → 200 dönmeli', async () => {
-    const res = await request(app).get('/about');
-    expect(res.statusCode).toBe(200);
-  });
-
-  it('GET /contact → 200 dönmeli', async () => {
-    const res = await request(app).get('/contact');
-    expect(res.statusCode).toBe(200);
-  });
-
-  it('Bilinmeyen rota → 404 dönmeli', async () => {
-    const res = await request(app).get('/nonexistent-route');
-    expect(res.statusCode).toBe(404);
-  });
-
-});
-*/
+module.exports = app;

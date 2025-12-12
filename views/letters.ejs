@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<body class="container mt-5">
+    <%- include('partials/header') %>
+    <h1 class="mb-4"><%= title %></h1>
+
+    <div class="mt-3">
+        <p>Aşağıdaki tabloda Türkçe harfler, bunlara karşılık gelen Braille sembolleri ve nokta numaraları listelenmiştir.</p>
+        
+        <table class="table table-striped mt-3" aria-label="Braille Harfleri Tablosu">
+            <thead>
+                <tr>
+                    <th scope="col">Harf</th>
+                    <th scope="col">Braille Sembolü</th>
+                    <th scope="col">Noktalar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (const key in charMap) { %>
+                    <% if (charMap.hasOwnProperty(key)) { %>
+                        <tr>
+                            <td><%= charMap[key].character %></td>
+                            <td class="braille-text" style="font-size: 1.5em;"><%= charMap[key].character %></td>
+                            <td><%= charMap[key].dots.replace(/_/g, '-') %></td>
+                        </tr>
+                    <% } %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>
