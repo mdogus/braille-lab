@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
+    "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "jest"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.87.1",
     "axios": "^1.7.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -16,7 +17,8 @@
     "express": "^4.21.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "postgres": "^3.4.7"
   },
   "devDependencies": {
     "jest": "^30.0.3",

@@ -13,6 +13,10 @@ const lettersRouter = require('./routes/letters');
 const contractionsWithSingleLetterRouter = require('./routes/contractionsWithSingleLetter');
 const contactRouter = require('./routes/contact');
 
+const authRouter = require('./routes/auth');
+const testDbRouter = require('./routes/test_db');
+const { optionalAuth } = require('./middleware/authMiddleware');
+
 const app = express();
 
 // view engine setup
@@ -25,7 +29,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Global auth middleware to set res.locals.user
+app.use(optionalAuth);
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
+
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
+app.use('/', testDbRouter); // Mount at root so it is /test-sr
 app.use('/users', usersRouter);
 app.use('/brtyper', brtyperRouter);
 app.use('/brreader', brreaderRouter);

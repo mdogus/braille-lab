@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<%- include('../partials/head', { title: title }) %>
+
+    <body>
+        <%- include('../partials/header') %>
+
+            <main class="container my-5" style="max-width: 500px;">
+                <h1 class="text-center mb-4">
+                    <%= title %>
+                </h1>
+
+                <% if (error) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                    <% } %>
+
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <form action="/auth/register" method="POST">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">E-posta Adresi</label>
+                                        <input type="email" class="form-control" id="email" name="email" required
+                                            autofocus>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Şifre</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            required minlength="6">
+                                        <div class="form-text">En az 6 karakter olmalıdır.</div>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-success btn-lg">Kayıt Ol</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center py-3">
+                                <a href="/auth/login" class="text-decoration-none">Zaten hesabın var mı? Giriş Yap</a>
+                            </div>
+                        </div>
+            </main>
+
+            <%- include('../partials/footer') %>
+    </body>
+
+</html>

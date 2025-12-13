@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<%- include('partials/head', { title: title }) %>
+
+    <body>
+        <%- include('partials/header') %>
+
+            <main class="container my-5">
+                <h1>
+                    <%= title %>
+                </h1>
+
+                <% if (success) { %>
+                    <div class="alert alert-success">
+                        <h4>Test Başarılı!</h4>
+                        <p>Veritabanı bağlantısı ve yazma/okuma işlemi başarılı oldu.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">Upsert Sonucu</div>
+                                <div class="card-body">
+                                    <pre><%= JSON.stringify(upserted, null, 2) %></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">Read Sonucu</div>
+                                <div class="card-body">
+                                    <pre><%= JSON.stringify(read, null, 2) %></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } else { %>
+                        <div class="alert alert-danger">
+                            <h4>Test Başarısız</h4>
+                            <p>Hata Detayı: <%= error %>
+                            </p>
+                        </div>
+                        <% } %>
+
+                            <a href="/" class="btn btn-secondary">Ana Sayfaya Dön</a>
+            </main>
+
+            <%- include('partials/footer') %>
+    </body>
+
+</html>
