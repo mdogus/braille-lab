@@ -1,0 +1,47 @@
+liblouis-build güncelleme:
+1. 
+Belirti
+/test-liblouis endpoint’i çalışıyordu ama brailleText null geliyordu. Log’da özellikle şunları görüyorduk:
+• 
+Cannot resolve table 'unicode.dis'
+• 
+opcode 'nonumsign' not defined (en kritik hata)
+2. 
+Kök neden
+İki ayrı problem vardı:
+A) Tablo çözümleme (table resolve) problemi
+Liblouis tabloları diskte vardı (unicodeExists true) ama liblouis’in table resolver’ı “unicode.dis” / “tables/unicode.dis” dosyasını bulamıyordu. Bu, enableOnDemandTableLoading için verilen base path ile tableSpec formatının birbirini tutmamasından ve/veya her request’te tekrar init edilmesinden kaynaklanabiliyordu.
+B) Sürüm uyumsuzluğu (asıl kilit nokta)
+Log’da şu hata çıktı:
+tables/en-ueb-g1.ctb: ... opcode 'nonumsign' not defined.
+Bu şu demekti:
+• 
+Kullandığımız tablolar (özellikle en-ueb-g1.ctb gibi include edilen tablolar) “nonumsign” opcode’unu kullanıyor.
+• 
+Ama bizim kurulu liblouis çekirdeği (liblouis-build 3.2.0-rc) bu opcode’u tanımıyordu.
+Sonuç: tablo derlemesi hata veriyor, çeviri iptal oluyor ve brailleText null dönüyordu.
+3. 
+Ne yaptık?
+A) node_modules’u sıfırladık
+• 
+node_modules’u sildik
+• 
+npm ci ile temiz kurulum yaptık
+Ama bu tek başına yetmedi çünkü liblouis-build hâlâ eskiydi.
+B) liblouis çekirdeğini güncelledik (asıl çözüm)
+• 
+liblouis/js-build ile “güncel snapshot” liblouis-build kurdurduk.
+Bundan sonra liblouis-build sürümü 0.0.0-<commit> gibi hash’li göründü (bu normal; release yerine commit snapshot).
+Bu güncel çekirdek, “nonumsign” gibi yeni opcode’ları desteklediği için tablolar artık derlenebilir hâle geldi.
+4. 
+Sonuç
+• 
+tr-g1.ctb ve tr-g2.ctb artık çalıştı.
+• 
+/test-liblouis çıktısında brailleText dolu geldi:
+"Merhaba dünya!" -> "⠠⠍⠑⠗⠒⠃⠁⠀⠳⠖"
+• 
+Log’da “found table …” satırları ve “Translation complete” göründü.
+5. 
+Ek not (log’daki “Character already defined” mesajları)
+Bunlar “fatal error” değil, uyarı. Tablo içinde aynı karakter için birden fazla kural tanımı var; liblouis “önce tanımlanan kuralı kullanacağım” diye bilgi veriyor. Çeviriyi engellemiyor.

@@ -11,6 +11,7 @@ const brreaderRouter = require('./routes/brreader');
 const aboutRouter = require('./routes/about');
 const lettersRouter = require('./routes/letters');
 const contractionsWithSingleLetterRouter = require('./routes/contractionsWithSingleLetter');
+const testLiblouisRouter = require("./routes/test-liblouis");
 const contactRouter = require('./routes/contact');
 
 const authRouter = require('./routes/auth');
@@ -45,6 +46,7 @@ app.use('/brreader', brreaderRouter);
 app.use('/letters', lettersRouter);
 app.use('/contractions-single', contractionsWithSingleLetterRouter);
 app.use('/about', aboutRouter);
+app.use("/", testLiblouisRouter);
 app.use('/contact', contactRouter);
 
 // catch 404 and forward to error handler

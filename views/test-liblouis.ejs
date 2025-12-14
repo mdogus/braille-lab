@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr">
+<%- include('partials/head') %>
+
+<body class="container mt-5">
+  <%- include('partials/header') %>
+
+  <h1 class="mb-4"><%= title || "Liblouis Test" %></h1>
+
+  <p class="mb-3">
+    Aşağıdaki alana metin yaz. Braille çıktısı otomatik olarak üretilecektir.
+  </p>
+
+  <form class="mb-3" onsubmit="return false;" aria-label="Liblouis Braille Çevirme Formu">
+    <div class="mb-3">
+      <label for="textInput" class="form-label">Metin</label>
+      <input
+        id="textInput"
+        name="text"
+        type="text"
+        class="form-control"
+        autocomplete="off"
+        value="Merhaba dünya!"
+        aria-describedby="textHelp"
+      />
+      <div id="textHelp" class="form-text">
+        Örnek: Merhaba dünya!
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="tableSelect" class="form-label">Tablo</label>
+      <select id="tableSelect" name="tr" class="form-select">
+        <option value="tr-g1.ctb">tr-g1.ctb (Türkçe, Grade 1)</option>
+        <option value="tr-g2.ctb" selected>tr-g2.ctb (Türkçe, Grade 2)</option>
+        <option value="tr.ctb">tr.ctb</option>
+      </select>
+      <div class="form-text">
+        Çeviri endpoint’i: <code>/test-liblouis</code>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button id="btnTranslate" type="button" class="btn btn-primary">
+        Çevir
+      </button>
+      <button id="btnClear" type="button" class="btn btn-outline-secondary">
+        Temizle
+      </button>
+    </div>
+  </form>
+
+  <h2 class="h4 mt-4">Braille Çıktısı</h2>
+
+  <div class="card">
+    <div class="card-body">
+      <div id="status" class="mb-2" aria-live="polite"></div>
+
+      <pre
+        id="brailleOutput"
+        class="braille-text"
+        style="font-size: 1.6rem; margin: 0;"
+        aria-label="Braille çıktısı"
+        aria-live="polite"
+      ></pre>
+
+      <details class="mt-3">
+        <summary>Tanılama (JSON)</summary>
+        <pre id="debugJson" style="white-space: pre-wrap; margin-top: 0.75rem;"></pre>
+      </details>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const textInput = document.getElementById("textInput");
+      const tableSelect = document.getElementById("tableSelect");
+      const btnTranslate = document.getElementById("btnTranslate");
+      const btnClear = document.getElementById("btnClear");
+      const status = document.getElementById("status");
+      const brailleOutput = document.getElementById("brailleOutput");
+      const debugJson = document.getElementById("debugJson");
+
+      let debounceTimer = null;
+
+      function setStatus(message, isError) {
+        status.textContent = message || "";
+        status.className = isError ? "text-danger mb-2" : "text-muted mb-2";
+      }
+
+      async function translateNow() {
+        const text = (textInput.value || "").trim();
+        const tr = tableSelect.value;
+
+        if (!text) {
+          brailleOutput.textContent = "";
+          debugJson.textContent = "";
+          setStatus("Metin boş.", false);
+          return;
+        }
+
+        setStatus("Çevriliyor...", false);
+
+        const url =
+          "/api/liblouis?text=" +
+          encodeURIComponent(text) +
+          "&tr=" +
+          encodeURIComponent(tr);
+
+        try {
+          const resp = await fetch(url, { headers: { "Accept": "application/json" } });
+          const data = await resp.json();
+
+          debugJson.textContent = JSON.stringify(data, null, 2);
+
+          if (!data.ok) {
+            brailleOutput.textContent = "";
+            setStatus("Hata: " + (data.error || "Bilinmeyen hata"), true);
+            return;
+          }
+
+          brailleOutput.textContent = data.brailleText || "";
+          setStatus("Tamamlandı. Tablo: " + (data.tableSpec || tr), false);
+        } catch (e) {
+          brailleOutput.textContent = "";
+          debugJson.textContent = "";
+          setStatus("İstek başarısız: " + String(e && e.message ? e.message : e), true);
+        }
+      }
+
+      function translateDebounced() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(translateNow, 250);
+      }
+
+      btnTranslate.addEventListener("click", translateNow);
+      btnClear.addEventListener("click", () => {
+        textInput.value = "";
+        brailleOutput.textContent = "";
+        debugJson.textContent = "";
+        setStatus("", false);
+        textInput.focus();
+      });
+
+      textInput.addEventListener("input", translateDebounced);
+      tableSelect.addEventListener("change", translateNow);
+
+      // İlk yüklemede otomatik çevir
+      translateNow();
+    })();
+  </script>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
