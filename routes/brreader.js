@@ -3,13 +3,13 @@ const fetch = require('node-fetch');
 const router = express.Router();
 require('dotenv').config();
 
-// Hugging Face API için doğru modeli kullanıyoruz
-const API_URL = 'https://api-inference.huggingface.co/models/ai-forever/mGPT';
-const API_KEY = process.env.HF_TOKEN;
+// OpenAI API ayarları
+const API_URL = 'https://api.openai.com/v1/chat/completions';
+const API_KEY = process.env.OPENAI_TOKEN;
 
 router.get('/generate', async (req, res) => {
     try {
-        console.log('🟢 Hugging Face API çağrısı başlatılıyor...');
+        console.log('🟢 OpenAI API çağrısı başlatılıyor...');
 
         // ✅ API Anahtarının Tanımlı Olduğunu Kontrol Et
         if (!API_KEY || API_KEY.trim() === "") {
@@ -20,7 +20,7 @@ router.get('/generate', async (req, res) => {
         // ✅ API Anahtarını Konsolda Görüntüle (Hata Ayıklama)
         console.log("✅ Authorization Header:", `Bearer ${API_KEY}`);
 
-        // Hugging Face API'ye POST isteği gönderiyoruz
+        // OpenAI API'ye POST isteği gönderiyoruz
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
@@ -28,19 +28,21 @@ router.get('/generate', async (req, res) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                inputs: "Türkçe bir cümle üret.",
-                parameters: { max_length: 50 }
+                model: 'gpt-3.5-turbo',
+                messages: [{ role: 'user', content: 'Türkçe bir cümle üret.' }],
+                max_tokens: 50
             })
         });
 
-        console.log('🟢 Hugging Face API yanıtı alındı.');
+        console.log('🟢 OpenAI API yanıtı alındı.');
         const data = await response.json();
         console.log("📌 API Yanıtı:", JSON.stringify(data, null, 2));
 
         // ✅ Yanıtın Beklenen Formatı İçerdiğini Kontrol Et
-        if (response.ok && Array.isArray(data) && data.length > 0 && data[0].hasOwnProperty("generated_text")) {
-            console.log('✅ Cümle başarıyla üretildi:', data[0].generated_text);
-            res.json({ text: data[0].generated_text });
+        if (response.ok && Array.isArray(data.choices) && data.choices.length > 0) {
+            const text = data.choices[0].message.content.trim();
+            console.log('✅ Cümle başarıyla üretildi:', text);
+            res.json({ text });
         } else {
             console.error('❌ Cümle üretilemedi:', data);
             res.status(500).json({ error: data.error || 'Cümle üretilemedi' });
