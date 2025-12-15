@@ -12,3 +12,54 @@
   display: block;
   margin-top: 0; /* Adjust to align the menu properly */
 }
+
+/* Perkins Braille Writer Styles */
+.perkins-container {
+    display: inline-block;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.perkins-keys {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.perkins-key {
+    width: 50px;
+    height: 80px;
+    background-color: #333; /* Default Black */
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: background-color 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.perkins-key.space-key {
+    width: 120px;
+    height: 50px; /* Space bar is often shorter in height or different */
+}
+
+/* Validation Colors */
+.perkins-key.active {
+    background-color: #555;
+    transform: translateY(2px);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+}
+
+.perkins-key.correct {
+    background-color: #28a745 !important; /* Green */
+}
+
+.perkins-key.incorrect {
+    background-color: #dc3545 !important; /* Red */
+}
